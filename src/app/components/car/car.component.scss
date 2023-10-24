@@ -2,6 +2,10 @@
   padding: 0 50px;
   margin: 0 auto;
 
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+
   .main-body {
     padding-top: 20px;
     margin: 0 auto;
@@ -12,14 +16,9 @@
     }
   }
 
-  .example-spacer {
-    flex: 1 1 auto;
-  }
+  .table-container {
 
-  table {
-    margin-top: 10px;
-
-    .action {
+    .actions {
       display: flex;
       gap: 5px;
     }

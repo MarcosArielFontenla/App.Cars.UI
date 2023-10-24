@@ -2,10 +2,7 @@
   <mat-toolbar color="primary">
     <span>Crud Application</span>
     <span class="example-spacer"></span>
-    <button
-      mat-raised-button
-      (click)="openAddEditForm()">ADD CAR
-    </button>
+    <button mat-raised-button (click)="openAddEditForm()">ADD CAR</button>
   </mat-toolbar>
 
   <div class="main-body">
@@ -17,7 +14,6 @@
         placeholder="Write any filter..."
         #input>
     </mat-form-field>
-
     <div class="table-container">
       <table mat-table [dataSource]="dataSource" matSort>
 
