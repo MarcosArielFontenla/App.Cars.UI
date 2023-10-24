@@ -1,0 +1,26 @@
+<div mat-dialog-title>
+  <h1>Cars Form</h1>
+</div>
+
+<form [formGroup]="carFormGroup" (ngSubmit)="onFormSubmit()">
+  <div mat-dialog-content class="content">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Year</mat-label>
+        <input matInput type="text" placeholder="Ex. Year" formControlName="year">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Model Name</mat-label>
+        <input matInput placeholder="Ex. Model Name" formControlName="modelName">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Color</mat-label>
+        <input matInput placeholder="Ex. Color" formControlName="color">
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions class="action">
+    <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+    <button mat-raised-button color="primary" type="submit">{{ data ? 'Update': 'Save' }}</button>
+  </div>
+</form>

@@ -1,6 +1,6 @@
 export interface Car {
   id: number;
-  age: string;
+  year: string;
   modelName: string;
   color: string;
 }
