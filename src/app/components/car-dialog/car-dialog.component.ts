@@ -1,11 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA  } from '@angular/material/dialog';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Car } from 'src/app/shared/models/car.model';
 import { CarService } from 'src/app/shared/services/car.service';
 
 @Component({
-  selector: 'app-edit-dialog',
+  selector: 'app-car-dialog',
   templateUrl: './car-dialog.component.html',
   styleUrls: ['./car-dialog.component.scss']
 })
@@ -20,9 +20,9 @@ export class CarDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: Car,
     private formBuilder: FormBuilder) {
       this.carFormGroup = this.formBuilder.group({
-        make: '',
-        modelName: '',
-        color: '',
+        make: [''],
+        modelName: [''],
+        color: [''],
         year: 0,
         description: '',
         price: 0
@@ -39,7 +39,7 @@ export class CarDialogComponent implements OnInit {
       // Update an existing car.
       this.carService.updateCar(this.data.id, this.carFormGroup.value).subscribe({
         next: (val: any) => {
-          console.log('Car updated successfully!');
+          console.log('Update successful');
           this.dialogRef.close(true);
         },
         error: (err: any) => {
@@ -50,7 +50,7 @@ export class CarDialogComponent implements OnInit {
       // Create a new car.
       this.carService.createCar(this.carFormGroup.value).subscribe({
         next: (val: any) => {
-          console.log('Car created successfully!');
+          console.log('Create successful');
           this.dialogRef.close(true);
         },
         error: (err: any) => {

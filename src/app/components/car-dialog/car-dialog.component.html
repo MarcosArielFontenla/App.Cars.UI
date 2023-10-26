@@ -1,10 +1,9 @@
-<div mat-dialog-title>
+<div class="mat-dialog-title">
   <h1>Cars Form</h1>
 </div>
 
 <form [formGroup]="carFormGroup" (ngSubmit)="onFormSubmit()">
   <div mat-dialog-content class="content">
-
     <div class="row">
       <mat-form-field appearance="outline">
         <mat-label>Make</mat-label>
@@ -62,8 +61,8 @@
       </mat-form-field>
     </div>
   </div>
-  <div mat-dialog-actions class="action">
+  <div mat-dialog-actions class="actions">
     <button mat-raised-button [mat-dialog-close]="false">Cancel</button>
-    <button mat-raised-button color="primary" type="submit">{{ data ? 'Update': 'Save' }}</button>
+    <button mat-raised-button color="primary" type="submit">{{ data ? 'Update' : 'Save' }}</button>
   </div>
 </form>

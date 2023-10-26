@@ -1,13 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Car } from 'src/app/shared/models/car.model';
-import { CarService } from 'src/app/shared/services/car.service';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-
+import { Car } from 'src/app/shared/models/car.model';
+import { CarService } from 'src/app/shared/services/car.service';
 import { CarDialogComponent } from '../car-dialog/car-dialog.component';
-import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-car',
@@ -16,11 +13,7 @@ import { FormGroup } from '@angular/forms';
 })
 
 export class CarComponent implements OnInit {
-
-  @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-  displayedColumns: string[] = ['id', 'make', 'modelName', 'color', 'year', 'description', 'price', 'actions'];
+  displayedColumns: string[] = ['id', 'make', 'modelName', 'color', 'year', 'description', 'price'];
   dataSource!: MatTableDataSource<Car>;
   editCarForm!: FormGroup;
 
@@ -30,14 +23,17 @@ export class CarComponent implements OnInit {
     this.getAllCars();
   }
 
-  // Opens the dialog to add or edit a car.
+  // Open the dialog to add or edit a car.
   openAddEditForm(): void {
     const dialogRef = this.dialog.open(CarDialogComponent);
     dialogRef.afterClosed().subscribe({
-      next: (val) => {
-        if (val) {
+      next: (result: boolean) => {
+        if (result) {
           this.getAllCars();
         }
+      },
+      error: (err: any) => {
+        console.error(err);
       },
     });
   }
@@ -47,12 +43,14 @@ export class CarComponent implements OnInit {
     const dialogRef = this.dialog.open(CarDialogComponent, {
       data: car,
     });
-
     dialogRef.afterClosed().subscribe({
-      next: (val) => {
-        if (val) {
+      next: (result: boolean) => {
+        if (result) {
           this.getAllCars();
         }
+      },
+      error: (err: any) => {
+        console.error(err);
       },
     });
   }
@@ -61,18 +59,8 @@ export class CarComponent implements OnInit {
   deleteCar(id: number): void {
     this.carService.deleteCar(id).subscribe(() => {
       this.dataSource.data = this.dataSource.data.filter((car: Car) => car.id !== id);
-      console.log('Car deleted successfully!');
-    });
-  }
-
-  // Applies a filter to the data source based on user input.
-  applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+      console.log('Car deleted successfully');
+    })
   }
 
   // Get all cars list from service.
@@ -80,10 +68,11 @@ export class CarComponent implements OnInit {
     this.carService.getAllCars().subscribe({
       next: (res) => {
         this.dataSource = new MatTableDataSource(res);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
       },
-      error: console.log,
+      error: (err: any) => {
+        console.error(err);
+      },
     });
   }
+
 }

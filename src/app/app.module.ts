@@ -22,7 +22,7 @@ import { CarDialogComponent } from './components/car-dialog/car-dialog.component
   declarations: [
     AppComponent,
     CarComponent,
-    CarDialogComponent
+    CarDialogComponent,
   ],
   imports: [
     BrowserModule,
