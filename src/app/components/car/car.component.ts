@@ -20,7 +20,7 @@ export class CarComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  displayedColumns: string[] = ['id', 'year', 'modelName', 'color', 'actions'];
+  displayedColumns: string[] = ['id', 'make', 'modelName', 'color', 'year', 'description', 'price', 'actions'];
   dataSource!: MatTableDataSource<Car>;
   editCarForm!: FormGroup;
 
@@ -30,6 +30,7 @@ export class CarComponent implements OnInit {
     this.getAllCars();
   }
 
+  // Opens the dialog to add or edit a car.
   openAddEditForm(): void {
     const dialogRef = this.dialog.open(CarDialogComponent);
     dialogRef.afterClosed().subscribe({
@@ -41,6 +42,7 @@ export class CarComponent implements OnInit {
     });
   }
 
+  // Opens the dialog to update a car.
   openUpdateCar(car: Car): void {
     const dialogRef = this.dialog.open(CarDialogComponent, {
       data: car,
@@ -55,12 +57,15 @@ export class CarComponent implements OnInit {
     });
   }
 
+  // Deletes a car.
   deleteCar(id: number): void {
     this.carService.deleteCar(id).subscribe(() => {
       this.dataSource.data = this.dataSource.data.filter((car: Car) => car.id !== id);
+      console.log('Car deleted successfully!');
     });
   }
 
+  // Applies a filter to the data source based on user input.
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -70,6 +75,7 @@ export class CarComponent implements OnInit {
     }
   }
 
+  // Get all cars list from service.
   private getAllCars(): void {
     this.carService.getAllCars().subscribe({
       next: (res) => {

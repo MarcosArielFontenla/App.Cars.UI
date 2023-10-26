@@ -20,9 +20,12 @@ export class CarDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: Car,
     private formBuilder: FormBuilder) {
       this.carFormGroup = this.formBuilder.group({
-        year: '',
+        make: '',
         modelName: '',
         color: '',
+        year: 0,
+        description: '',
+        price: 0
       });
   }
 
@@ -30,8 +33,10 @@ export class CarDialogComponent implements OnInit {
     this.carFormGroup.patchValue(this.data);
   }
 
+  // Handles the form submission, either updating or creating a car.
   onFormSubmit(): void {
     if (this.carFormGroup.valid && this.data) {
+      // Update an existing car.
       this.carService.updateCar(this.data.id, this.carFormGroup.value).subscribe({
         next: (val: any) => {
           console.log('Car updated successfully!');
@@ -42,6 +47,7 @@ export class CarDialogComponent implements OnInit {
         },
       });
     } else {
+      // Create a new car.
       this.carService.createCar(this.carFormGroup.value).subscribe({
         next: (val: any) => {
           console.log('Car created successfully!');
